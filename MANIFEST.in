@@ -1,0 +1,2 @@
+recursive-include tracardi_add_joint_operation/model *
+recursive-include tracardi_add_joint_operation/service *
