@@ -1,15 +1,22 @@
 from tracardi_plugin_sdk.action_runner import ActionRunner
 from tracardi_plugin_sdk.domain.register import Plugin, Spec, MetaData
 from tracardi_plugin_sdk.domain.result import Result
+from tracardi_add_joint_operation.model.models import Module
+
+
+def join(array, string):
+    return string.join(array)
 
 
 class JoinAction(ActionRunner):
 
     def __init__(self, **kwargs):
-        pass
+        self.config = Module(**kwargs)
 
     async def run(self, payload):
-        return Result(port="payload", value=payload)
+        dot = self._get_dot_accessor(payload)
+        array = dot[self.config.array]
+        return Result(port="payload", value=join(array, self.config.join_string))
 
 
 def register() -> Plugin:
@@ -23,7 +30,7 @@ def register() -> Plugin:
             version='0.1',
             license="MIT",
             author="Patryk Migaj",
-            init={}
+            init={"join_string": "None"}
         ),
         metadata=MetaData(
             name='tracardi-add-joint-operation',

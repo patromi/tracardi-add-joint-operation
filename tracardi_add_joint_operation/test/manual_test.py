@@ -7,7 +7,8 @@ from tracardi_plugin_sdk.service.plugin_runner import run_plugin
 
 from tracardi_add_joint_operation.plugin import JoinAction
 
-init = {}
+init = {"join_string": ",",
+        "array": "event@id"}
 payload = {}
 profile = Profile(id="profile-id")
 event = Event(id="event-id",
@@ -17,7 +18,7 @@ event = Event(id="event-id",
               source=Entity(id="source-id"),
               context=Context())
 result = run_plugin(JoinAction, init, payload,
-                    profile)
+                    profile,event=event)
 
 print("OUTPUT:", result.output)
 print("PROFILE:", result.profile)
